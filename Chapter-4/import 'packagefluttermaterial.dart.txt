@@ -1,0 +1,387 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Bite_Buddy',
+      theme: ThemeData(
+        primarySwatch: Colors.orange,
+      ),
+      home: HomePage(),
+    );
+  }
+}
+
+class HomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Bite_Buddy'),
+        centerTitle: true,
+        backgroundColor: Colors.orange,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _buildCategoryButton(context, 'Food', Colors.green, FoodPage()),
+            SizedBox(height: 20),
+            _buildCategoryButton(context, 'Drinks', Colors.blue, DrinksPage()),
+            SizedBox(height: 20),
+            _buildCategoryButton(context, 'Dessert', Colors.pink, DessertPage()),
+          ],
+        ),
+      ),
+    );
+  }
+
+  AnimatedScale _buildCategoryButton(
+      BuildContext context, String label, Color color, Widget page) {
+    return AnimatedScale(
+      duration: Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+      scale: 1.0, // Default scale
+      child: ElevatedButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => page),
+          );
+        },
+        child: Text(
+          label,
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+        style: ElevatedButton.styleFrom(
+          minimumSize: Size(double.infinity, 50),
+         // primary: color,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class FoodPage extends StatelessWidget {
+  final List<String> foodItems = [
+    "Burger",
+    "Fried Chicken",
+    "Spaghetti",
+    "Pizza",
+    "Steak",
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Food Menu'),
+        backgroundColor: Colors.green,
+      ),
+      body: ListView.builder(
+        itemCount: foodItems.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            leading: Icon(Icons.fastfood),
+            title: Text(foodItems[index]),
+            trailing: ElevatedButton(
+              onPressed: () => _showOrderDialog(context, foodItems[index]),
+              child: Text('Order'),
+              style: ElevatedButton.styleFrom(
+            //    primary: Colors.orange,
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  void _showOrderDialog(BuildContext context, String itemName) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AnimatedDialog(
+          child: AlertDialog(
+            title: Text('Order $itemName'),
+            content: Text('Are you a Senior Citizen or PWD?'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  _showPriorityDialog(context, itemName, "Senior Citizen");
+                },
+                child: Text('Senior Citizen'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  _showPriorityDialog(context, itemName, "PWD");
+                },
+                child: Text('PWD'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  _showPriorityDialog(context, itemName, "Regular");
+                },
+                child: Text('Regular'),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _showPriorityDialog(BuildContext context, String itemName, String priority) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AnimatedDialog(
+          child: AlertDialog(
+            title: Text('Order Confirmation'),
+            content: Text(
+              'Your order for $itemName has been placed with $priority priority.',
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text('Close'),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
+
+class DrinksPage extends StatelessWidget {
+  final List<String> drinkItems = [
+    "Coca Cola",
+    "Pepsi",
+    "Iced Tea",
+    "Lemonade",
+    "Coffee",
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Drinks Menu'),
+        backgroundColor: Colors.blue,
+      ),
+      body: ListView.builder(
+        itemCount: drinkItems.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            leading: Icon(Icons.local_drink),
+            title: Text(drinkItems[index]),
+            trailing: ElevatedButton(
+              onPressed: () => _showOrderDialog(context, drinkItems[index]),
+              child: Text('Order'),
+              style: ElevatedButton.styleFrom(
+              //  primary: Colors.orange,
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  void _showOrderDialog(BuildContext context, String itemName) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AnimatedDialog(
+          child: AlertDialog(
+            title: Text('Order $itemName'),
+            content: Text('Are you a Senior Citizen or PWD?'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  _showPriorityDialog(context, itemName, "Senior Citizen");
+                },
+                child: Text('Senior Citizen'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  _showPriorityDialog(context, itemName, "PWD");
+                },
+                child: Text('PWD'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  _showPriorityDialog(context, itemName, "Regular");
+                },
+                child: Text('Regular'),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _showPriorityDialog(BuildContext context, String itemName, String priority) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AnimatedDialog(
+          child: AlertDialog(
+            title: Text('Order Confirmation'),
+            content: Text(
+              'Your order for $itemName has been placed with $priority priority.',
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text('Close'),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
+
+class DessertPage extends StatelessWidget {
+  final List<String> dessertItems = [
+    "Ice Cream",
+    "Cake",
+    "Brownie",
+    "Pie",
+    "Cupcakes",
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Dessert Menu'),
+        backgroundColor: Colors.pink,
+      ),
+      body: ListView.builder(
+        itemCount: dessertItems.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            leading: Icon(Icons.cake),
+            title: Text(dessertItems[index]),
+            trailing: ElevatedButton(
+              onPressed: () => _showOrderDialog(context, dessertItems[index]),
+              child: Text('Order'),
+              style: ElevatedButton.styleFrom(
+             //   primary: Colors.orange,
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  void _showOrderDialog(BuildContext context, String itemName) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AnimatedDialog(
+          child: AlertDialog(
+            title: Text('Order $itemName'),
+            content: Text('Are you a Senior Citizen or PWD?'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  _showPriorityDialog(context, itemName, "Senior Citizen");
+                },
+                child: Text('Senior Citizen'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  _showPriorityDialog(context, itemName, "PWD");
+                },
+                child: Text('PWD'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  _showPriorityDialog(context, itemName, "Regular");
+                },
+                child: Text('Regular'),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _showPriorityDialog(BuildContext context, String itemName, String priority) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AnimatedDialog(
+          child: AlertDialog(
+            title: Text('Order Confirmation'),
+            content: Text(
+              'Your order for $itemName has been placed with $priority priority.',
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text('Close'),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
+
+// Custom Animated Dialog Widget
+class AnimatedDialog extends StatelessWidget {
+  final Widget child;
+
+  AnimatedDialog({required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      backgroundColor: Colors.transparent,
+      child: AnimatedOpacity(
+        duration: Duration(milliseconds: 500),
+        opacity: 1.0,
+        child: Material(
+          borderRadius: BorderRadius.circular(20),
+          color: Colors.white,
+          child: child,
+        ),
+      ),
+    );
+  }
+}

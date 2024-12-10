@@ -1,0 +1,23 @@
+import 'package:flutter/material.dart';
+
+class AnimatedDialog extends StatelessWidget {
+  final Widget child;
+
+  AnimatedDialog({required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      backgroundColor: Colors.transparent,
+      child: AnimatedOpacity(
+        duration: Duration(milliseconds: 500),
+        opacity: 1.0, // You can adjust the opacity to control the fade effect
+        child: Material(
+          borderRadius: BorderRadius.circular(20),
+          color: Colors.white,
+          child: child,
+        ),
+      ),
+    );
+  }
+}

@@ -1,0 +1,36 @@
+void _showOrderDialog(BuildContext context, String itemName) {
+  showDialog(
+    context: context,
+    builder: (context) {
+      return AnimatedDialog(
+        child: AlertDialog(
+          title: Text('Order $itemName'),
+          content: Text('Are you a Senior Citizen or PWD?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+                _showPriorityDialog(context, itemName, "Senior Citizen");
+              },
+              child: Text('Senior Citizen'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+                _showPriorityDialog(context, itemName, "PWD");
+              },
+              child: Text('PWD'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+                _showPriorityDialog(context, itemName, "Regular");
+              },
+              child: Text('Regular'),
+            ),
+          ],
+        ),
+      );
+    },
+  );
+}
